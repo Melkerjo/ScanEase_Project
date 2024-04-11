@@ -1,0 +1,76 @@
+.main {
+    position: relative; 
+    min-height: 100vh;
+    background-image: url('../../../public/food_background_2.jpeg'); 
+    background-size: cover; 
+    background-position: center; 
+}
+
+.main::after {
+    content: ''; 
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.2); 
+}
+
+.mainBox {
+    position: relative;
+    z-index: 2; 
+}
+
+
+.mainText {
+    text-align: center;
+    font-size: 1.5rem; 
+    color: #F5F5DC; 
+    margin-bottom: 10px; 
+    text-transform: uppercase; 
+    font-weight: bold; 
+    border-bottom: 2px solid white; 
+    padding-top: 5px;
+    padding-bottom: 5px; 
+    margin-bottom: 2rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px); 
+    border-radius: 5px;
+  }
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .orderList {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .order {
+    width: calc(50% - 20px);
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .date {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .amountOfProducts {
+    font-size: 16px;
+    margin-top: 8px;
+  }
+  
+  .amount {
+    font-size: 16px;
+    margin-top: 8px;
+    color: #007bff;
+  }
+  

@@ -1,0 +1,105 @@
+/* navbar.module.css */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    height: 4rem;
+  }
+
+  .menuContainer {
+    margin-left: 1rem; 
+  }
+
+  .hamburgerMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+  }
+  
+  .menu {
+    position: absolute;
+    top: 0;
+    left: -200px; 
+    width: 200px;
+    height: 100%;
+    background-color: #f3f3f3;
+    transition: left 0.3s ease-in-out;
+    padding-top: 4rem;
+    z-index: 4;
+  }
+
+  .hamburgerMenuText{
+    margin-left: 0px;
+  }
+
+  .hamburgerMenuTextOpen{
+    margin-left: 200px;
+    transition: margin-left 0.3s ease-in-out;
+  }
+  
+  .menu.open {
+    left: 0; 
+  }
+
+  .navlinks {
+    font-size: 0.8rem;
+    text-align: center;
+    color: black; 
+    margin-bottom: 1rem;
+    display: block;
+  }
+  
+  .navlinks h2:hover {
+    transform: scale(0.95);  
+   }
+  
+
+  .visibleTrue{
+    display: block;
+  }
+
+  .visibleTrue{
+    display: none;
+  }
+  
+  .loginoutButton {
+    display: flex;
+  }
+  
+  .login {
+    background-color: #F5F5DC;;; 
+    color: black;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;    
+  }
+  
+  .logout {
+    background-color: #F5F5DC;;; 
+    color: black;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;    
+  }
+
+  .createAccount {
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+  }
+
+  .login:hover, .createAccount:hover {
+    transform: scale(0.95); 
+  }
+  
