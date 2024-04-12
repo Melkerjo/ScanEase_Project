@@ -5,9 +5,9 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <p>
+        <h1>
           Välkommen till ScanEsase!
-        </p>
+        </h1>
       </div>
 
       <div className={styles.grid}>

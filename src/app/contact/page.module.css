@@ -3,10 +3,11 @@
 .main {
     max-width: 800px;
     margin: 0 auto;
-    padding: 40px;
+    padding: 2rem;
     background-color: #f9f9f9;
-    border-radius: 10px;
+    border-radius: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 90vh;
   }
   
   .contactSection {
@@ -14,25 +15,28 @@
   }
   
   .contactSection h2 {
-    font-size: 32px;
-    margin-bottom: 20px;
+    font-size: 1.8rem;
+    margin-bottom: 1.8rem;
     color: #333;
     text-transform: uppercase;
     text-align: center;
   }
+  .contactSection p{
+    font-size: 1rem;
+  }
   
   .faqsSection .question {
-    margin-bottom: 20px;
+    margin-bottom: 1.8rem;
   }
   
   .faqsSection .question h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
     color: #333;
   }
   
   .faqsSection .question p {
-    font-size: 18px;
+    font-size: 1rem;
     color: #555;
     line-height: 1.5;
   }
@@ -40,7 +44,7 @@
   .question::after {
     content: "\25B6";
     float: right;
-    font-size: 20px;
+    font-size: 2rem;
     transition: transform 0.3s ease;
   }
   
