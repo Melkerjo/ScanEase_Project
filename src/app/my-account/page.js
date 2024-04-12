@@ -1,10 +1,9 @@
-// MyAccount.js
 "use client"
 import styles from "./page.module.css";
 
 export default function MyAccount() {
 
-    const USERINFORMATION = {
+    const USERINFORMATION = { //test user
         firstName: "Melker",
         lastName: "Johansson",
         personalNumber: "123456-7890",
@@ -14,8 +13,7 @@ export default function MyAccount() {
         city: "Målilla"
     };
 
-    const handleSaveChanges = () => {
-        // Funktion för att hantera spara ändringar
+    const handleSaveChanges = () => { //function for savning user-data
         console.log("Ändringar sparade!");
     };
 

@@ -2,28 +2,28 @@
 
 import { useState, useEffect, useRef } from 'react';
 import styles from './page.module.css';
-import Quagga from 'quagga'; // Importera Quagga
+import Quagga from 'quagga';  //quagga for ean-scanning
 
 export default function Shop() {
-    const [scannedProducts, setScannedProducts] = useState([
+    const [scannedProducts, setScannedProducts] = useState([ //array for product in basket
         {name:"Ost", price:"149", ean: "9772066291223", units: 2},
         {name:"Paprika", price:"18", ean: "9767431382547", units: 3},
         {name:"Chips", price:"29", ean: "9761697128365", units: 3}
     ]);
-    const [isCameraActive, setIsCameraActive] = useState(false); // State för att hålla koll på om kameran är aktiv
-    const [isQuaggaInitialized, setIsQuaggaInitialized] = useState(false); // State för att hålla koll på om Quagga är initialiserat
-    const videoRef = useRef(null); // Ref för att komma åt videokomponenten
+    const [isCameraActive, setIsCameraActive] = useState(false); // State if camera is active or not
+    const [isQuaggaInitialized, setIsQuaggaInitialized] = useState(false); // State for qagga
+    const videoRef = useRef(null); // Ref for video reference
 
     useEffect(() => {
         if (isCameraActive && !isQuaggaInitialized) {
-            // Konfigurera QuaggaJS
+            // configure QuaggaJS
             Quagga.init({
                 inputStream: {
                     name: "Live",
                     type: "LiveStream",
-                    target: videoRef.current, // Använd ref för att komma åt videokomponenten
+                    target: videoRef.current, 
                     constraints: {
-                        facingMode: "environment" // Använd bakre kamera om tillgänglig
+                        facingMode: "environment" // use backcamere if its possible
                     }
                 },
                 decoder: {
@@ -55,17 +55,15 @@ export default function Shop() {
                 }
             }, function(err) {
                 if (err) {
-                    console.error("Det uppstod ett fel vid initiering av QuaggaJS:", err);
+                    console.error("An error occurred during initialization of QuaggaJS:", err);
                     return;
                 }
-                console.log("QuaggaJS initierad");
-                Quagga.start(); // Starta streckkodsläsaren
-                setIsQuaggaInitialized(true); // Sätt isQuaggaInitialized till true när Quagga är initialiserat
+                Quagga.start(); // Start scanner
+                setIsQuaggaInitialized(true); // Set isQuaggaInitialized to true when Quagga is initialized
             });
 
-            // Lyssna på händelser från QuaggaJS
             Quagga.onDetected(function(result) {
-                console.log("Skanning lyckades", result);
+                console.log("Scanning succeed", result);
                 const { codeResult } = result;
                 if (codeResult) {
                     const { code } = codeResult;
@@ -80,19 +78,18 @@ export default function Shop() {
                 
                     if (scannedProductIndex !== -1) {
                         const updatedProducts = [...scannedProducts];
-                        updatedProducts[scannedProductIndex].units++; // Öka units för den befintliga produkten med ett
-                        setScannedProducts(updatedProducts); // Uppdatera state med den nya produkten
+                        updatedProducts[scannedProductIndex].units++; // add units to basket if prouduct already exist
+                        setScannedProducts(updatedProducts); 
                     } else {
                         scannedProducts.push({name:"", price:"", ean: code, units: 1});
-                        setScannedProducts(prevProducts => [...prevProducts, { ean: code, units: 1 }]); // Lägg till den skannade produkten med units 1 i state
-                    }
+                        setScannedProducts(prevProducts => [...prevProducts, { ean: code, units: 1 }]); 
                 }
                 
                 
             });
         }
 
-        // Funktion för att stänga av kameran när komponenten avmonteras
+        // Function for cloosing kamera
         return () => {
             if (isQuaggaInitialized) {
                 Quagga.stop();
@@ -101,19 +98,20 @@ export default function Shop() {
     }, [isCameraActive, isQuaggaInitialized]);
 
     const toggleCamera = () => {
-        setIsCameraActive(prevState => !prevState); // Växla mellan att aktivera och inaktivera kameran
+        setIsCameraActive(prevState => !prevState); // Activate, deactivate camera
     };
 
     const completePurchase = () => {
         alert('Köp slutfört! Tack för din beställning.');
         setScannedProducts([]);
+        scannedProducts = [];
     };
 
     return (
         <main className={styles.main}>
             <h2>Handla</h2>
             <button onClick={toggleCamera} className={styles.cameraButton}>
-                {isCameraActive ? 'Klar med skanning' : 'Skanna produkter'}
+                {isCameraActive ? 'Klar' : 'Skanna produkter'}
             </button>
             <h3>Varukorg</h3>
             <table className={styles.cartTable}>
@@ -139,7 +137,7 @@ export default function Shop() {
             <button onClick={completePurchase} className={styles.purchaseButton}>
                 Slutför köp
             </button>
-            <video ref={videoRef} id="video" playsInline style={{ transform: 'scaleX(-1)' }}></video>
+            <video ref={videoRef} id="video" playsInline style={{ transform: 'scaleX(-1)' }}></video> 
         </main>
     );
 }

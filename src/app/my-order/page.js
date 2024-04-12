@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 
 export default function MyOrder() {
 
-    const ORDERLIST = [
+    const ORDERLIST = [ //test orderlist
         { orderdate: '2024-04-01', amountOfProducts: '10', amount: '549'},
         { orderdate: '2024-04-02', amountOfProducts: '20', amount: '799'},
         { orderdate: '2024-04-03', amountOfProducts: '15', amount: '699'},

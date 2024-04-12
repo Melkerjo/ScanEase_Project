@@ -37,7 +37,7 @@ export default function Navigation() {
       };
 
    
-
+//Links in the nav meny
     const LINKS = [
         { href: '/', text: 'Hem', visible: true },
         { href: '/shop', text: 'Handla', visible: true }, // Visible for all users
