@@ -5,7 +5,7 @@ import styles from './page.module.css';
 import Quagga from 'quagga';  //quagga for ean-scanning
 
 export default function Shop() {
-    const [scannedProducts, setScannedProducts] = useState([ //array for product in basket
+    let [scannedProducts, setScannedProducts] = useState([ //array for product in basket
         {name:"Ost", price:"149", ean: "9772066291223", units: 2},
         {name:"Paprika", price:"18", ean: "9767431382547", units: 3},
         {name:"Chips", price:"29", ean: "9761697128365", units: 3}
@@ -85,7 +85,7 @@ export default function Shop() {
                         setScannedProducts(prevProducts => [...prevProducts, { ean: code, units: 1 }]); 
                 }
                 
-                
+            }
             });
         }
 
@@ -111,7 +111,7 @@ export default function Shop() {
         <main className={styles.main}>
             <h2>Handla</h2>
             <button onClick={toggleCamera} className={styles.cameraButton}>
-                {isCameraActive ? 'Klar' : 'Skanna produkter'}
+                {isCameraActive ? 'Klar med skanning' : 'Skanna produkter'}
             </button>
             <h3>Varukorg</h3>
             <table className={styles.cartTable}>
@@ -137,7 +137,7 @@ export default function Shop() {
             <button onClick={completePurchase} className={styles.purchaseButton}>
                 Slutför köp
             </button>
-            <video ref={videoRef} id="video" playsInline style={{ transform: 'scaleX(-1)' }}></video> 
+            <video ref={videoRef} id="video" playsInline style={{ transform: 'scaleX(-1)' }}></video>
         </main>
     );
 }
