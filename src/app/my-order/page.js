@@ -1,37 +1,59 @@
-
+"use client"
+import React, { useState, useEffect } from 'react';
 import styles from "./page.module.css";
-
+import fetchData from "../../services/OrderService"; 
 
 export default function MyOrder() {
+    const [orderList, setOrderList] = useState([]); 
+    const [selectedOrder, setSelectedOrder] = useState(null); 
 
-    const ORDERLIST = [ //test orderlist
-        { orderdate: '2024-04-01', amountOfProducts: '10', amount: '549'},
-        { orderdate: '2024-04-02', amountOfProducts: '20', amount: '799'},
-        { orderdate: '2024-04-03', amountOfProducts: '15', amount: '699'},
-        { orderdate: '2024-04-04', amountOfProducts: '8', amount: '399'},
-        { orderdate: '2024-04-05', amountOfProducts: '12', amount: '499'},
-        { orderdate: '2024-04-06', amountOfProducts: '25', amount: '899'},
-        { orderdate: '2024-04-07', amountOfProducts: '18', amount: '749'},
-        { orderdate: '2024-04-08', amountOfProducts: '14', amount: '599'},
-    ];
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            fetchData(userId).then(data => {
+                setOrderList(data);
+            }).catch(error => {
+                console.error(error);
+            });
+        }
+    }, []);
 
+    const handleShowOrderDetails = (order) => {
+        setSelectedOrder(order === selectedOrder ? null : order); 
+    };
 
-    return(
+    return (
         <main className={styles.main}>
             <div className={styles.mainBox}>
                 <div className={styles.container}>
                     <h2 className={styles.mainText}>Beställningslista</h2>
-                        <div className={styles.orderList}>
-                            {ORDERLIST.map((order, index) => (
+                    <div className={styles.orderList}>
+                        {orderList.map((order, index) => (
                             <div key={index} className={styles.order}>
-                                <p className={styles.date}>Orderdatum: {order.orderdate}</p>
-                                <p className={styles.amountOfProducts}>Antal produkter: {order.amountOfProducts}</p>
+                                <p className={styles.date}>Orderdatum: {order.date}</p>
+                                <p className={styles.amountOfProducts}>Antal produkter: {order.quantity}</p>
                                 <p className={styles.amount}>Belopp: {order.amount} kr</p>
+                                <button className={styles.showMore} onClick={() => handleShowOrderDetails(order)}>
+                                    {selectedOrder === order ? "Dölj detaljer" : "Visa hela ordern"}
+                                </button>
+                                {selectedOrder === order && (
+                                    <div className={styles.orderDetails}>
+                                        <h3>Orderdetaljer</h3>
+                                        <h4>Produkter:</h4>
+                                        <ul>
+                                            {order.orderProduct.map((product, idx) => (
+                                                <li key={idx}>
+                                                    Produkt {product.product.name}, Pris: {product.product.price}:-,  Antal: {product.quantity}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
-                            ))}
-                        </div>
-                </div>         
+                        ))}
+                    </div>
+                </div>
             </div>
         </main>
-    );    
+    );
 }

@@ -1,4 +1,4 @@
-"use client" 
+"use client";
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation';
 import LoadingSpinner from '../../app/loadingspinner/loadingspinner'; 
 
 // List of unsecured pages
-const unsecuredPages = ['/my-account', '/my-order', '/shop'];
+const unsecuredPagesOutLogged = ['/my-account', '/my-order', '/shop'];
+const unsecuredPagesInLogged = ['/create-account', '/login'];
 
 export default function AuthChecker({ children }) {
   const pathname = usePathname(); // Get the current pathname
@@ -14,26 +15,24 @@ export default function AuthChecker({ children }) {
   const [isLoading, setIsLoading] = useState(false); // State to track loading status
 
   useEffect(() => {
-    let loggedInState = localStorage.getItem('isLoggedIn');
-    if (loggedInState === null) {
-      loggedInState = false;
-    }
-    const isUnsecuredPage = unsecuredPages.includes(pathname);
-    
-    // Logging for debugging purposes
-    console.log('Current path:', pathname);
-    console.log('Is logged in:', loggedInState);
-    console.log('Is unsecured page:', isUnsecuredPage);
-    
+    const loggedInState = localStorage.getItem('isLoggedIn') === 'true';
+
     // Check if user is not logged in and the page is unsecured, then set loading state to true
-    if (!loggedInState && isUnsecuredPage) {
+    const isUnsecuredPageOutLogged = unsecuredPagesOutLogged.includes(pathname);
+    const isUnsecuredPageInLogged = unsecuredPagesInLogged.includes(pathname);
+    
+    if (!loggedInState && isUnsecuredPageOutLogged) {
       setIsLoading(true); 
+    } else if (loggedInState && isUnsecuredPageInLogged) {
+      setIsLoading(true);
     } else {
       setIsLoading(false); 
     }
     
     // Redirect to home page if user is not logged in, page is unsecured, and not already loading
-    if (!loggedInState && isUnsecuredPage && !isLoading) {
+    if (!loggedInState && isUnsecuredPageOutLogged && !isLoading) {
+      router.push('/');
+    } else if (loggedInState && isUnsecuredPageInLogged && !isLoading) {
       router.push('/');
     }
 

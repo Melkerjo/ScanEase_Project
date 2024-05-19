@@ -72,25 +72,4 @@
 }
 
 .saveChangeButton:hover {
-    transform: scale(0.95);  
-  }
-
-    .showPasswordButton {
-      background-color: #4CAF50; 
-      border: none;
-      color: white;
-      padding: 7px 14px;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 12px;
-      margin: 4px 2px;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: background-color 0.3s ease;
-  }
-  
-  .showPasswordButton:hover {
-      transform: scale(0.95);  
-    }
-
-   
+    transform: scale(0.95);  }

@@ -1,6 +1,7 @@
 "use client"
 import styles from "./Navigation.module.css";
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function Navigation() {
@@ -21,9 +22,10 @@ export default function Navigation() {
   }, []);
 
 
+    const router = useRouter();
+
       const handleLogin = () => {
-        setIsLoggedIn(true);
-        localStorage.setItem('isLoggedIn', true)
+        router.push('/login');
       };
 
       const handleLogout = () => {
@@ -32,18 +34,21 @@ export default function Navigation() {
         };
     
       const handleCreateAccount = () => {
-        setIsLoggedIn(false);
-        localStorage.setItem('isLoggedIn', true)
+        router.push('/create-account');
       };
+
+      const handleLinkClick = () => {
+        setIsOpen(false); // Stäng menyn när en länk klickas på
+    };
 
    
 //Links in the nav meny
     const LINKS = [
         { href: '/', text: 'Hem', visible: true },
-        { href: '/shop', text: 'Handla', visible: true }, // Visible for all users
+        { href: '/shop', text: 'Handla', visible: isLoggedIn }, // Visible for all users
         { href: '/my-order', text: 'Mina beställningar', visible: isLoggedIn }, // Visible only if logged in
         { href: '/my-account', text: 'Mitt konto', visible: isLoggedIn },  // Visible only if logged in
-        { href: '/contact', text: 'Kontakt/Frågor & Svar', visible: isLoggedIn } // Visible for all users
+        { href: '/contact', text: 'Kontakt/Frågor & Svar', visible: true } // Visible for all users
     ];
 
     
@@ -55,12 +60,12 @@ export default function Navigation() {
         </div>
         <div className={isOpen ? `${styles.menu} ${styles.open}` : styles.menu}>
             <div>
-                {LINKS.map((link, index) => link.visible && <NavigationLink key={index} text={link.text} href={link.href} />)}
+                {LINKS.map((link, index) => link.visible && <NavigationLink key={index} text={link.text} href={link.href} onClick={handleLinkClick} />)}
             </div>
         </div>
         {isLoggedIn && (
                 <div className={styles.loginoutButton}>
-                    <button className={styles.login} onClick={handleLogout}>
+                    <button className={styles.login} onClick={handleLogout} >
                         Logga ut
                     </button>
                 </div>
@@ -81,12 +86,18 @@ export default function Navigation() {
     
 }
 
-function NavigationLink({ text, href }) {
-  
-    return (
-      <Link href={href} className={styles.navlinks}>
-        <h2>{text}</h2>
+function NavigationLink({ text, href, onClick }) {
+  const handleLinkClick = () => {
+      if (onClick) {
+          onClick(); 
+      }
+  };
+
+  return (
+      <Link href={href} className={styles.navlinks} onClick={handleLinkClick}>
+          <h2>{text}</h2>
       </Link>
-    );  
+  );
 
 }
+
